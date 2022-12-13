@@ -54,46 +54,34 @@ export class News extends Component {
     }
   }
 
- async componentDidMount(){
-    console.log("cdm")
-    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=83a29bdfa8684778a23679c493e4641d&pageSize=${this.props.pageSize}`;
-    let data = await fetch(url);
-    let parsedData = await data.json();
-    console.log(parsedData);
-    this.setState({articles : parsedData.articles, totalArticles : parsedData.totalResults })
-
-
-  }
-  handleNextClick = async() =>{
-       if(!(this.state.page + 1 > Math.ceil(this.state.totalArticles/this.props.pageSize))){
-        console.log("Next")
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=83a29bdfa8684778a23679c493e4641d&pageSize=${this.props.pageSize}&page=${this.state.page + 1}`;
-        this.setState({loading : true})
-        let data = await fetch(url);
-        let parsedData = await data.json();
-        console.log(parsedData);
-        this.setState({
-        page : this.state.page + 1,
-        articles : parsedData.articles, 
-        loading : false
-      })
-    
+  async updateContent() {
+    if(!(this.state.page + 1 > Math.ceil(this.state.totalArticles/this.props.pageSize))){
+      console.log("Next")
+      let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=83a29bdfa8684778a23679c493e4641d&pageSize=${this.props.pageSize}&page=${this.state.page}`;
+      this.setState({loading : true})
+      let data = await fetch(url);
+      let parsedData = await data.json();
+      console.log(parsedData);
+      this.setState({
+      articles : parsedData.articles, 
+      loading : false
+    })
   }
 }
 
-  handlePreviousClick = async()=>{
-    console.log("Previous")
-    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=83a29bdfa8684778a23679c493e4641d&&pageSize=${this.props.pageSize}&page=${this.state.page - 1}`;
-    this.setState({loading : true})
-    let data = await fetch(url);
-    let parsedData = await data.json();
-    console.log(parsedData);
-    this.setState({
-      page : this.state.page - 1,
-      articles : parsedData.articles ,
-      loading : false
-    })
+ async componentDidMount(){
+    this.updateContent();
+  }
+  handleNextClick = async() =>{
+   this.setState({page : this.state.page + 1})
+   this.updateContent();
+    
+  }
 
+
+  handlePreviousClick = async()=>{
+    this.setState({page : this.state.page - 1})
+    this.updateContent();
 
   }
 
