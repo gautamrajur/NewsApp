@@ -2,6 +2,7 @@ import './App.css';
 import React, { Component } from 'react'
 import Navbar from './components/Navbar';
 import News from './components/News';
+import LoadingBar from 'react-top-loading-bar'
 import {
   Routes,
   Route,
@@ -10,13 +11,28 @@ import {
 
 export default class App extends Component {
   pageSize = 12;
+  
+  // constructor(){
+  //   super()
+  //   this.state = {
+  //     progress : 0
+  //   }
+  // }
+
+
+  //   setProgress = (progress)=>{
+  //     this.setState({progress : this.state.progress})
+  //   }
+  
+
   render() {
+
     return (
       <div style={{backgroundColor : 'darkgrey'}}>
         <Router>
           <Navbar/>
           <Routes>
-           <Route exact path="/" element={ <News pageSize={this.pageSize} country = 'in' />}></Route>
+           <Route exact path="/" element={ <News key = "root" pageSize={this.pageSize} country = 'in' />}></Route>
            <Route exact path="/general" element={ <News key = "general" pageSize={this.pageSize} country = 'in' category = "general"/>}></Route>
            <Route exact path="/business" element={ <News key = "business" pageSize={this.pageSize} country = 'in' category = "business"/>}></Route>
            <Route exact path="/entertainment" element={ <News  key = "entertainment" pageSize={this.pageSize} country = 'in' category = "entertainment"/>}></Route>
