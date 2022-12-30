@@ -9,7 +9,7 @@ export class News extends Component {
     country: 'in',
     pageSize : 10,
     category : 'general',
-    apiKey : '83a29bdfa8684778a23679c493e4641d'
+    
   }
   static propTypes = {
     country: PropTypes.string,
@@ -102,7 +102,7 @@ async componentDidMount() {
   
       this.setState({page : this.state.page + 1})
       console.log(this.state.page)
-      const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=83a29bdfa8684778a23679c493e4641d&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+      const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
       let data = await fetch(url);
       let parsedData = await data.json()
       this.setState({
